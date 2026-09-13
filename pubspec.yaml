@@ -1,0 +1,36 @@
+name: animcodec
+description: Animated raster codecs built on Imcodec for editable frame sequences.
+version: 0.1.0
+homepage: https://github.com/focale-editor/animcodec
+repository: https://github.com/focale-editor/animcodec
+
+topics:
+  - image
+  - animation
+  - gif
+  - codec
+  - flutter
+
+screenshots:
+  - description: 'A flat illustration of editable raster animation frames.'
+    path: screenshots/overview.png
+
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  imcodec: '>=0.4.4 <0.5.0'
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  release: ^0.1.11
+
+release:
+  changelog:
+    header: '# 📰 Animcodec changelog'
+    defaultIgnoredTypes: ['test']
+    defaultIgnoredScopes: ['repo', 'docs', 'version', 'deps', 'tools']
