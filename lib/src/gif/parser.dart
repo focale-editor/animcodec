@@ -417,12 +417,16 @@ final class _GifWriter {
   _GifWriter({required this.maxBytes});
 
   /// Number of bytes written so far.
-  int get length => _builder.length;
+  int get length => _length;
+
+  /// Total bytes emitted, including chunks already drained by the caller.
+  int _length = 0;
 
   /// Writes one byte after enforcing the output limit.
   void writeByte(int value) {
     _ensureCapacity(1);
     _builder.addByte(value & 0xff);
+    _length++;
   }
 
   /// Writes one little-endian unsigned 16-bit value.
@@ -435,6 +439,7 @@ final class _GifWriter {
   void writeBytes(List<int> bytes) {
     _ensureCapacity(bytes.length);
     _builder.add(bytes);
+    _length += bytes.length;
   }
 
   /// Returns one owned contiguous byte buffer.

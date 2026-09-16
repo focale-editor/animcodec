@@ -32,19 +32,25 @@ RasterAnimation _decodeGif(
   GifAnimationDecodeOptions options,
 ) {
   final _ParsedGif parsed = _ParsedGif.parse(bytes: bytes, options: options);
-  final int canvasBytes = parsed.width * parsed.height * 4;
-  final int minimumWorkingBytes = canvasBytes * 4;
-  if (minimumWorkingBytes > options.maxDecodedBytes) {
-    throw AnimationCodecException(
-      message: 'GIF canvas needs at least $minimumWorkingBytes decoded bytes, exceeding the ${options.maxDecodedBytes} byte limit',
-      failure: AnimationCodecFailure.limitExceeded,
-    );
-  }
+  return RasterAnimation(
+    width: parsed.width,
+    height: parsed.height,
+    frames: _decodeGifFrames(parsed, options, retainFrames: true).toList(growable: false),
+    loopCount: parsed.loopCount,
+  );
+}
 
+/// Yields independently owned canvases without retaining earlier results.
+Iterable<RasterAnimationFrame> _decodeGifFrames(
+  _ParsedGif parsed,
+  GifAnimationDecodeOptions options, {
+  bool retainFrames = false,
+}) sync* {
+  final int canvasBytes = parsed.width * parsed.height * 4;
   final Uint8List canvas = Uint8List(canvasBytes);
-  final List<RasterAnimationFrame> frames = [];
+  int frameCount = 0;
   for (final _ParsedGifFrame frame in parsed.frames) {
-    final int retainedAndWorkingBytes = canvasBytes * (frames.length + 4);
+    final int retainedAndWorkingBytes = canvasBytes * ((retainFrames ? frameCount : 0) + 4);
     if (retainedAndWorkingBytes > options.maxDecodedBytes) {
       throw AnimationCodecException(
         message: 'GIF frames need at least $retainedAndWorkingBytes decoded bytes, exceeding the ${options.maxDecodedBytes} byte limit',
@@ -63,7 +69,7 @@ RasterAnimation _decodeGif(
     } on Object catch (error) {
       // A damaged frame after complete ones ends the sequence, as it does in
       // browsers; a damaged first frame leaves nothing worth showing.
-      if (frames.isNotEmpty) {
+      if (frameCount > 0) {
         break;
       }
       throw AnimationCodecException(
@@ -83,21 +89,20 @@ RasterAnimation _decodeGif(
       canvasWidth: parsed.width,
       area: sourceArea,
     );
-    frames.add(
-      RasterAnimationFrame(
-        image: imcodec.Image.fromRgba(
-          width: parsed.width,
-          height: parsed.height,
-          bytes: Uint8List.fromList(canvas),
-          copy: false,
-        ),
-        duration: Duration(
-          milliseconds: frame.control.delayCentiseconds * 10,
-        ),
-        sourceArea: sourceArea,
-        disposal: frame.control.disposal,
+    yield RasterAnimationFrame(
+      image: imcodec.Image.fromRgba(
+        width: parsed.width,
+        height: parsed.height,
+        bytes: Uint8List.fromList(canvas),
+        copy: false,
       ),
+      duration: Duration(
+        milliseconds: frame.control.delayCentiseconds * 10,
+      ),
+      sourceArea: sourceArea,
+      disposal: frame.control.disposal,
     );
+    frameCount++;
     switch (frame.control.disposal) {
       case AnimationFrameDisposal.keep:
         break;
@@ -111,12 +116,6 @@ RasterAnimation _decodeGif(
         canvas.setAll(0, previous!);
     }
   }
-  return RasterAnimation(
-    width: parsed.width,
-    height: parsed.height,
-    frames: frames,
-    loopCount: parsed.loopCount,
-  );
 }
 
 /// Restores one rectangular canvas area to transparency.

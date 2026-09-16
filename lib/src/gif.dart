@@ -65,7 +65,11 @@ final class GifAnimationDecodeOptions {
   /// Largest number of image descriptors accepted.
   final int maxFrames;
 
-  /// Largest aggregate decoded and working allocation accepted.
+  /// Largest decoded and working allocation accepted.
+  ///
+  /// Eager decoding includes every retained result. [GifAnimationDecoder.decodeFrames]
+  /// counts only its four working canvases; callers retaining yielded frames
+  /// must budget their own result storage.
   final int maxDecodedBytes;
 
   /// Creates bounded GIF decoding settings.
@@ -155,6 +159,22 @@ final class GifAnimationDecoder extends Converter<List<int>, RasterAnimation> {
     Uint8List bytes, {
     GifAnimationDecodeOptions? options,
   }) => _inspectGif(bytes, options ?? this.options);
+
+  /// Lazily decodes independently owned, complete RGBA canvases in order.
+  ///
+  /// Advancing the iterator performs one frame decode. Earlier canvases are not
+  /// retained, so a consumer can await persistence before asking for the next.
+  /// Encoded input must remain unchanged until iteration ends. Limits and
+  /// container structure are checked immediately; pixel errors occur during
+  /// iteration, with the same damaged-tail tolerance as [decode].
+  Iterable<RasterAnimationFrame> decodeFrames(
+    Uint8List bytes, {
+    GifAnimationDecodeOptions? options,
+  }) {
+    final GifAnimationDecodeOptions resolved = options ?? this.options;
+    final _ParsedGif parsed = _ParsedGif.parse(bytes: bytes, options: resolved);
+    return _decodeGifFrames(parsed, resolved);
+  }
 
   /// Decodes a complete composited frame sequence.
   RasterAnimation decode(

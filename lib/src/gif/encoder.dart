@@ -17,8 +17,10 @@ Uint8List _encodeGif(
 
 /// Encodes complete RGBA canvas frames one at a time as a GIF89a animation.
 ///
-/// Only two canvases are retained at any time, so a long sequence can be
-/// rendered and encoded frame by frame without holding every frame in memory.
+/// Canvas work is bounded independently of the sequence length. Call [drain]
+/// after each [add] and await writing its result before supplying another frame
+/// to also bound encoded output memory. Without draining, output accumulates
+/// until [close], preserving the convenient in-memory API.
 ///
 /// Each frame after the first is written as the smallest rectangle containing
 /// its changes, and pixels that already show the right colour inside that
@@ -137,7 +139,21 @@ final class GifAnimationStreamEncoder {
     _frameCount++;
   }
 
-  /// Writes the last frame and returns the complete GIF bytes.
+  /// Transfers the encoded bytes produced since the previous drain.
+  ///
+  /// One pending frame remains until its disposal is known. Draining does not
+  /// finalize that frame or reset the cumulative output-size limit. The caller
+  /// must concatenate chunks in order, followed by the bytes from [close].
+  Uint8List drain() {
+    if (_closed) {
+      throw StateError('The GIF animation encoder is already closed');
+    }
+    return _output.takeBytes();
+  }
+
+  /// Writes the last frame and returns bytes not previously drained.
+  ///
+  /// This is the complete GIF when [drain] has never been called.
   Uint8List close() {
     if (_closed) {
       throw StateError('The GIF animation encoder is already closed');
