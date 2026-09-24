@@ -1,5 +1,10 @@
 # 📰 Animcodec changelog
 
+## v0.2.0
+Released on September 24, 2026.
+
+* **BREAKING CHORE**: Updated `imcodec`. ([#3ba2ece](https://github.com/focale-editor/animcodec/commit/3ba2ece))
+
 ## v0.1.1
 Released on September 17, 2026.
 

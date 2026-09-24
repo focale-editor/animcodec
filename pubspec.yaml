@@ -1,6 +1,6 @@
 name: animcodec
 description: Animated raster codecs built on Imcodec for editable frame sequences.
-version: 0.1.1
+version: 0.2.0
 homepage: https://github.com/focale-editor/animcodec
 repository: https://github.com/focale-editor/animcodec
 
