@@ -2,41 +2,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <title>Animcodec package overview</title>
   <desc>Layered raster frames and a play symbol representing editable animation codecs.</desc>
-  <defs>
-    <radialGradient id="inner-circle" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#000000" stop-opacity="1"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="blue-ring" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#007cf9" stop-opacity="0"/>
-      <stop offset="1" stop-color="#007cf9"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="82" fill="#181f33"/>
-  <g transform="translate(38.4 38.4) scale(.534233)" opacity=".94">
-    <circle cx="407.5" cy="407.5" r="400" fill="url(#inner-circle)"/>
-    <g fill="#303950">
-      <path d="m272.4 156.6s-84 31.2-133.5 148.6l273.4-51.7z"/>
-      <path d="m134.7 321.9s-37 81.6 11.4 199.4l156.1-230.4z"/>
-      <path d="m155.7 533s31.2 83.9 148.6 133.5L252.6 393z"/>
-      <path d="m321 670.6s81.5 37 199.4-11.4L290 503.2z"/>
-      <path d="m536.5 652.3s84-31.2 133.5-148.6l-273.5 51.7z"/>
-      <path d="m662.8 287.6-156 230.5L674.2 487s36.9-81.5-11.4-199.4z"/>
-      <path d="m652.3 276s-31.2-83.9-148.6-133.5L555.4 416z"/>
-      <path d="m487 138.4s-81.5-37-199.4 11.4l230.5 156z"/>
+  <rect width="512" height="512" rx="80" fill="#181F33"/>
+  <g transform="translate(38.4 38.4) scale(0.534601226993865)">
+    <!-- One lens ring leaves the aperture readable at small icon sizes. -->
+    <circle cx="407.5" cy="407.5" r="350" fill="none" stroke="#3F4B62" stroke-width="26" />
+
+    <!-- Keep the original eight-blade aperture as the photographic signature. -->
+    <g fill="#354056">
+      <path d="m 272.3999,156.6001 c 0,0 -84,31.2 -133.5,148.6 l 273.4,-51.7 z" />
+      <path d="m 134.6999,321.9001 c 0,0 -36.999993,81.6 11.4,199.4 l 156.1,-230.4 z" />
+      <path d="m 155.6999,533.0001 c 0,0 31.2,83.9 148.6,133.5 l -51.7,-273.5 z" />
+      <path d="m 320.9999,670.6001 c 0,0 81.5,37 199.4,-11.4 l -230.4,-156 z" />
+      <path d="m 536.4999,652.3001 c 0,0 84,-31.2 133.5,-148.6 l -273.5,51.7 z" />
+      <path d="m 662.7999,287.6001 -156,230.5 167.4,-31.1 c 0,0 36.9,-81.5 -11.4,-199.4 z" />
+      <path d="m 652.2999,276.0001 c 0,0 -31.2,-83.9 -148.6,-133.5 l 51.7,273.5 z" />
+      <path d="m 486.99996,138.40014 c 0,0 -81.5,-37 -199.4,11.4 l 230.5,156 z" />
     </g>
-    <circle cx="404.7" cy="404.7" r="324.7" fill="none" stroke="#303950" stroke-width="30"/>
-    <circle cx="407.2" cy="407.2" r="386.2" fill="none" stroke="#303950" stroke-width="30"/>
-    <circle cx="404.7" cy="404.7" r="324.7" fill="none" stroke="url(#blue-ring)" stroke-width="30"/>
+
+    <!-- A short, flat blue accent replaces the bright full-ring gradient. -->
+    <path d="M654.987 160.013 A350 350 0 0 1 654.987 654.987" fill="none" stroke="#538BD5" stroke-width="26" stroke-linecap="round" />
   </g>
-  <circle cx="256" cy="256" r="104" fill="#11182a" fill-opacity=".94" stroke="#303950" stroke-width="3"/>
-  <g fill="#11182a" stroke-linejoin="round" stroke-width="8">
-    <rect x="184" y="220" width="92" height="92" rx="12" stroke="#007cf9" opacity=".42"/>
-    <rect x="202" y="202" width="98" height="102" rx="13" stroke="#007cf9" opacity=".7"/>
-    <rect x="220" y="184" width="108" height="116" rx="14" stroke="#edf6ff"/>
+  <!-- The package symbol replaces Focale's monogram, without an extra badge. -->
+  <g transform="translate(256 256) scale(1.12) translate(-256 -256)">
+    <g fill="#181F33" stroke-linejoin="round" stroke-width="8">
+      <rect x="184" y="220" width="92" height="92" rx="12" stroke="#538BD5" opacity=".42"/>
+      <rect x="202" y="202" width="98" height="102" rx="13" stroke="#538BD5" opacity=".7"/>
+      <rect x="220" y="184" width="108" height="116" rx="14" stroke="#EDF0F4"/>
+    </g>
+    <path d="m258 216 40 26-40 26z" fill="#538BD5" stroke="#538BD5" stroke-linejoin="round" stroke-width="5"/>
+    <circle cx="274" cy="286" r="5" fill="#8DB5E8"/>
+    <circle cx="292" cy="286" r="5" fill="#538BD5"/>
+    <circle cx="310" cy="286" r="5" fill="#354056"/>
   </g>
-  <path d="m258 216 40 26-40 26z" fill="#007cf9" stroke="#007cf9" stroke-linejoin="round" stroke-width="5"/>
-  <circle cx="274" cy="286" r="5" fill="#86c8ff"/>
-  <circle cx="292" cy="286" r="5" fill="#007cf9"/>
-  <circle cx="310" cy="286" r="5" fill="#303950"/>
 </svg>
