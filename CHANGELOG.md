@@ -1,5 +1,10 @@
 # 📰 Animcodec changelog
 
+## v0.2.1
+Released on October 5, 2026.
+
+* **DOCS**: Updated package overview screenshot. ([#5f87b15](https://github.com/focale-editor/animcodec/commit/5f87b15))
+
 ## v0.2.0
 Released on September 24, 2026.
 
