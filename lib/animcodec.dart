@@ -2,5 +2,6 @@
 library;
 
 export 'src/animation.dart';
+export 'src/container.dart';
 export 'src/exception.dart';
 export 'src/gif.dart';
