@@ -1,5 +1,10 @@
 # 📰 Animcodec changelog
 
+## v0.2.2
+Released on November 8, 2026.
+
+* **FEAT**: Added bounded APNG and animated WebP inspection, progressive decoding and encoding. ([#be71208](https://github.com/focale-editor/animcodec/commit/be71208))
+
 ## v0.2.1
 Released on October 5, 2026.
 
